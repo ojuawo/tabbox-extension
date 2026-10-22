@@ -1,0 +1,28 @@
+{
+  "name": "tabbox-extension",
+  "version": "1.2.0",
+  "description": "Multi-Mode Vertical Tab Manager for Chrome Manifest V3",
+  "main": "background.js",
+  "scripts": {
+    "social": "node automations/scheduler.js",
+    "radar": "node automations/reddit_radar.js",
+    "post": "node automations/daily_poster.js",
+    "setup-ftp": "node automations/ftp_cron_setup.js",
+    "setup-ftp-py": "python automations/ftp_cron_setup.py",
+    "install-startup": "powershell -ExecutionPolicy Bypass -File automations/install-startup.ps1",
+    "uninstall-startup": "powershell -ExecutionPolicy Bypass -File automations/uninstall-startup.ps1",
+    "pack": "powershell -Command \"Compress-Archive -Path manifest.json, background.js, content-rail.js, sidepanel.html, sidepanel.css, sidepanel.js, splitview.html, grid.html, grid.js, icons -DestinationPath tabbox-extension.zip -Force; Copy-Item tabbox-extension.zip website\\tabbox-extension.zip -Force\""
+  },
+  "keywords": [
+    "chrome-extension",
+    "vertical-tabs",
+    "bento-grid",
+    "manifest-v3",
+    "tab-manager"
+  ],
+  "author": "TabBox Developer",
+  "license": "MIT",
+  "dependencies": {
+    "basic-ftp": "^6.2.3"
+  }
+}

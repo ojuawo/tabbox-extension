@@ -1,0 +1,61 @@
+[
+  {
+    "day": 1,
+    "platform": "Twitter/X",
+    "topic": "The Antagonistic Launch Hook",
+    "timing": "Tuesday 7:15 AM PST / 10:15 AM EST",
+    "content": "Chrome's native Side Panel has a dirty secret:\n\nGoogle hardcoded a 320px minimum width floor.\n\nOn a 13\" laptop, that's nearly 30% of your screen gone just to view a list of tabs.\n\nI got tired of waiting for Google to fix it, so I built TabBox. A multi-mode tab workspace that snaps to 56px or a zero-margin floating Chat Bubble.\n\nFree download + live simulator: https://tabbox.dev",
+    "one_click_tweet_url": "https://twitter.com/intent/tweet?text=Chrome%27s%20native%20Side%20Panel%20has%20a%20dirty%20secret%3A%0A%0AGoogle%20hardcoded%20a%20320px%20minimum%20width%20floor.%0A%0AOn%20a%2013%22%20laptop%2C%20that%27s%20nearly%2030%25%20of%20your%20screen%20gone%20just%20to%20view%20tabs.%0A%0AI%20got%20tired%20of%20waiting%2C%20so%20I%20built%20TabBox.%20Snaps%20to%2056px%20or%20a%20floating%20Chat%20Bubble%3A%20https%3A%2F%2Ftabbox.dev",
+    "media": "10s video showing Chrome 320px side panel vs TabBox 56px snap"
+  },
+  {
+    "day": 2,
+    "platform": "Reddit",
+    "target_subreddit": "r/chrome",
+    "topic": "Technical Case Study on Chromium Min-Width",
+    "timing": "Wednesday 8:30 AM PST",
+    "content": "Why does Chrome enforce a 320px minimum width on the Side Panel? (And how I built a 56px workaround)\n\nHey r/chrome,\n\nIf you use a 13-14\" laptop, you've probably noticed that opening Chrome's side panel squashes websites and cuts off nearly a third of your viewport because of the hard-coded 320px floor.\n\nI built a lightweight Manifest V3 extension called TabBox that injects an isolated Shadow DOM rail. It resizes down to 56px with a 120ms hover-peek expansion, or turns into a floating Chat Bubble with zero page displacement.\n\nThe core side panel mode is 100% free and open-source. Would love feedback from other tab hoarders: https://tabbox.dev"
+  },
+  {
+    "day": 3,
+    "platform": "Twitter/X",
+    "topic": "The $10 Lifetime Deal vs $84/yr SaaS",
+    "timing": "Thursday 8:00 AM PST",
+    "content": "Why does every productivity tool charge $10/month now?\n\nWorkona: $84/year.\nPartizion: $144/year.\n\nTabBox runs 100% client-side in Chrome Manifest V3. No cloud databases. No server burn.\n\nSo why charge a subscription? We don't.\n\n• Core Side Panel = $0 Free forever\n• Pro Modes (In-Page Rail, Chat Bubble, Alt+B Modal) = $10 Lifetime Deal once.\n\nhttps://tabbox.dev",
+    "one_click_tweet_url": "https://twitter.com/intent/tweet?text=Why%20does%20every%20tab%20manager%20charge%20%2410%2Fmonth%20now%3F%0A%0AWorkona%3A%20%2484%2Fyr.%0APartizion%3A%20%24144%2Fyr.%0A%0ATabBox%20runs%20100%25%20client-side.%0A%0A%E2%80%A2%20Core%20Mode%20%3D%20%240%20Free%20forever%0A%E2%80%A2%20Pro%20Modes%20%3D%20%2410%20Lifetime%20once.%0A%0Ahttps%3A%2F%2Ftabbox.dev",
+    "media": "Screenshot of pricing comparison table"
+  },
+  {
+    "day": 4,
+    "platform": "Twitter/X",
+    "topic": "The Floating Chat Bubble Feature Deep-Dive",
+    "timing": "Friday 9:00 AM PST",
+    "content": "For power users who hate when sidebars push website layout margins: ◓\n\nTabBox has a Floating Chat Bubble mode.\n\n• Floats on the edge of your screen\n• Shows live open tab count\n• Draggable vertically\n• Hover or click slides open a glassmorphic Bento Tab Flyout\n• Exactly 0px page margin shift\n\nTry the live simulator: https://tabbox.dev",
+    "one_click_tweet_url": "https://twitter.com/intent/tweet?text=For%20power%20users%20who%20hate%20sidebars%20pushing%20page%20margins%3A%20%E2%97%93%0A%0ATabBox%20has%20a%20Floating%20Chat%20Bubble%20mode.%0A%0A%E2%80%A2%20Floats%20on%20screen%20edge%0A%E2%80%A2%20Live%20tab%20count%0A%E2%80%A2%20Hover%2Fclick%20Bento%20flyout%0A%E2%80%A2%200px%20page%20margin%20shift%0A%0Ahttps%3A%2F%2Ftabbox.dev",
+    "media": "GIF of chat bubble expanding into Bento flyout"
+  },
+  {
+    "day": 5,
+    "platform": "Reddit",
+    "target_subreddit": "r/productivity",
+    "topic": "RAM Optimization & Tab Snoozing",
+    "timing": "Saturday 10:00 AM PST",
+    "content": "How to keep 40+ tabs open in Chrome without melting your laptop's RAM\n\nMost people know that Chrome tabs eat memory, but closing them loses your context. We built an instant 1-click RAM Snoozer inside TabBox that uses Chrome's native `tabs.discard` API.\n\nIt freezes background memory consumption while preserving your tab position and favicons. Tested it reclaiming 1.2 GB of RAM on an M1 Mac in 1 second.\n\nFree tool for anyone managing research or heavy project tabs: https://tabbox.dev"
+  },
+  {
+    "day": 6,
+    "platform": "Twitter/X",
+    "topic": "The Arc Browser Command Palette Alternative",
+    "timing": "Monday 8:00 AM PST",
+    "content": "Miss Arc's keyboard switcher, but stuck on Google Chrome? ⌘\n\nPress Alt+B in TabBox on any webpage.\n\nA glassmorphic centered Bento Grid pops up instantly:\n• Full fuzzy search\n• Arrow keys (←↑↓→) to navigate\n• Enter to switch\n• Delete to close\n\nZero screen space used until you need it. https://tabbox.dev",
+    "one_click_tweet_url": "https://twitter.com/intent/tweet?text=Miss%20Arc%27s%20keyboard%20switcher%2C%20but%20stuck%20on%20Chrome%3F%20%E2%8C%98%0A%0APress%20Alt%2BB%20on%20any%20page%20in%20TabBox%3A%0A%E2%80%A2%20Centered%20Bento%20grid%0A%E2%80%A2%20Fuzzy%20search%0A%E2%80%A2%20Arrow%20keys%20%2B%20Enter%20to%20switch%0A%E2%80%A2%20Zero%20screen%20space%20used%20until%20summoned%0A%0Ahttps%3A%2F%2Ftabbox.dev",
+    "media": "Short video showing Alt+B modal popup"
+  },
+  {
+    "day": 7,
+    "platform": "Product Hunt",
+    "topic": "Official Product Hunt Launch",
+    "timing": "Tuesday 12:01 AM PST",
+    "content": "TabBox is live on Product Hunt! 🚀\n\nA multi-mode vertical tab manager bypassing Chrome's 320px Side Panel floor. 4 distinct modes: 56px In-Page Rail, Floating Chat Bubble, Docked Companion Window, and Alt+B Command Modal.\n\nCore Side Panel is $0 Free forever. Pro Lifetime Deal is $10 for the community.\n\nJoin the discussion: https://tabbox.dev"
+  }
+]

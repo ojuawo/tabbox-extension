@@ -1,0 +1,65 @@
+{
+  "manifest_version": 3,
+  "name": "TabBox - Multi-Mode Grid Vertical Tabs",
+  "version": "2.0.0",
+  "description": "Multi-Mode Architecture Sandbox: In-Page Shadow Rail, Docked Companion Window, Command Bento Modal, and Native Side Panel.",
+  "permissions": [
+    "tabs",
+    "sidePanel",
+    "storage",
+    "tabGroups",
+    "scripting",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_title": "TabBox — Click to Toggle / Switch Mode"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-rail.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "toggle-command-modal": {
+      "suggested_key": {
+        "default": "Alt+B",
+        "mac": "Alt+B"
+      },
+      "description": "Toggle TabBox Command Bento Modal / Active View"
+    },
+    "cycle-mode": {
+      "suggested_key": {
+        "default": "Alt+M",
+        "mac": "Alt+M"
+      },
+      "description": "Cycle between TabBox Architecture Modes (Rail / Docked / Modal / SidePanel)"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/*",
+        "grid.html",
+        "splitview.html",
+        "sidepanel.html"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

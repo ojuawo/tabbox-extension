@@ -1,0 +1,10 @@
+{
+  "host": "ftp.yourdomain.com",
+  "port": 21,
+  "user": "your_ftp_username",
+  "password": "your_ftp_password",
+  "remoteDir": "public_html/tabbox-auto",
+  "domain": "https://yourdomain.com",
+  "webhook_url": "https://discord.com/api/webhooks/YOUR/WEBHOOK/URL",
+  "secret_token": "auto_generated_secure_token"
+}

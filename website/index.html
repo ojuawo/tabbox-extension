@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TabBox — Multi-Mode Vertical Tab Manager for Chrome</title>
+  <meta name="description" content="Break free from Chrome's 320px side panel floor. Choose between an In-Page Rail with Floating Chat Bubble, a Docked Companion Window, an Alt+B Command Modal, or a 2-6 Column Bento Grid.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <div class="nav-brand">
+        <div class="brand-icon">
+          <div class="mini-grid">
+            <span></span><span></span>
+            <span></span><span></span>
+          </div>
+        </div>
+        <span class="brand-name">TabBox</span>
+        <span class="brand-badge">Multi-Mode v1.2</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#modes">Architectures</a>
+        <a href="#simulator">Live Simulator</a>
+        <a href="#comparison">Comparison</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-cta">
+        <a href="tabbox-extension.zip" download class="btn btn-secondary btn-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download Free
+        </a>
+        <a href="#pricing" class="btn btn-primary btn-sm">
+          Get Pro Lifetime ($10)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container hero-content">
+      <div class="hero-pill">
+        <span class="pill-dot"></span>
+        <span>Bypassing Chrome's 320px Side Panel Width Floor</span>
+      </div>
+      <h1 class="hero-title">
+        Tired of Chrome's Stiff Side Panel? <br>
+        Meet <span class="gradient-text">Multi-Mode TabBox</span>.
+      </h1>
+      <p class="hero-subtitle">
+        Google forces every side panel to be at least 320px wide—eating 28% of your laptop screen. 
+        TabBox gives you <strong>4 distinct ways to browse</strong>: an ultra-narrow 56px In-Page Rail with a floating Chat Bubble, a synchronized Docked Window, an Arc-style <code>Alt+B</code> Command Palette, or a 2–6 column Bento Grid.
+      </p>
+
+      <div class="hero-actions">
+        <a href="tabbox-extension.zip" download class="btn btn-primary btn-lg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download Extension (.zip)
+        </a>
+        <a href="#simulator" class="btn btn-secondary btn-lg">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+          Test Live Simulator
+        </a>
+      </div>
+
+      <div class="hero-perks">
+        <span>✓ 100% Client-Side Privacy (0 Telemetry)</span>
+        <span>✓ Chrome Manifest V3 Certified</span>
+        <span>✓ Works on Chrome, Brave, Edge & Opera</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Multi-Mode Simulator Section -->
+  <section class="demo-section" id="simulator">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Interactive Sandbox</span>
+        <h2 class="section-title">Test All 4 Modes in Real-Time</h2>
+        <p class="section-subtitle">Click the mode switcher buttons below to see how TabBox transforms your browser window dynamically.</p>
+      </div>
+
+      <!-- Mode Selector Tabs on the Simulator -->
+      <div class="sim-mode-selector">
+        <button class="sim-mode-tab active" data-sim-mode="inpage-rail">
+          <span class="mode-tag pro">PRO</span>
+          <strong>1: In-Page Rail & Chat Bubble</strong>
+          <small>Snaps to 56px, hover-peek & floating bubble</small>
+        </button>
+        <button class="sim-mode-tab" data-sim-mode="docked-window">
+          <span class="mode-tag pro">PRO</span>
+          <strong>2: Docked Companion Window</strong>
+          <small>Magnet-tiled frameless side window</small>
+        </button>
+        <button class="sim-mode-tab" data-sim-mode="command-grid">
+          <span class="mode-tag pro">PRO</span>
+          <strong>3: Command Palette (Alt+B)</strong>
+          <small>Zero screen space used until summoned</small>
+        </button>
+        <button class="sim-mode-tab" data-sim-mode="sidepanel">
+          <span class="mode-tag free">FREE</span>
+          <strong>4: Chrome Side Panel</strong>
+          <small>2–6 column Bento Grid with visual preview</small>
+        </button>
+      </div>
+
+      <!-- Simulated Chrome Browser Viewport -->
+      <div class="browser-mockup" id="browser-mockup">
+        <div class="browser-topbar">
+          <div class="browser-dots">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+          </div>
+          <div class="browser-address">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line></svg>
+            <span id="sim-url-text">https://github.com/developer/tabbox</span>
+          </div>
+          <div class="browser-hint" id="sim-mode-indicator">Mode 1: In-Page Shadow DOM Rail</div>
+        </div>
+
+        <div class="browser-viewport" id="browser-viewport">
+          <!-- Simulation View 1: In-Page Rail & Floating Chat Bubble -->
+          <div class="sim-view active" id="view-inpage-rail">
+            <!-- Simulated In-Page Rail Strip -->
+            <div class="sim-rail" id="sim-rail">
+              <div class="sim-rail-header">
+                <button id="sim-rail-collapse" class="sim-mini-btn" title="Toggle 56px Collapse">☰</button>
+                <input type="text" id="sim-rail-search" class="sim-mini-search" placeholder="Search..." />
+                <button id="sim-rail-bubble-toggle" class="sim-mini-btn primary" title="Switch to Floating Bubble">◓</button>
+              </div>
+              <div class="sim-rail-tabs" id="sim-rail-tab-list">
+                <!-- Injected via script.js -->
+              </div>
+            </div>
+
+            <!-- Simulated Floating Chat Bubble -->
+            <div class="sim-chat-bubble" id="sim-chat-bubble" title="Click or hover to reveal Bento Flyout">
+              <div class="sim-bubble-icon">◫</div>
+              <div class="sim-bubble-badge" id="sim-bubble-badge">8</div>
+            </div>
+
+            <!-- Simulated Bento Tab Flyout (opens on hover/click of bubble) -->
+            <div class="sim-bubble-flyout" id="sim-bubble-flyout">
+              <div class="sim-flyout-header">
+                <span>TabBox Flyout</span>
+                <button id="sim-flyout-close" class="sim-mini-btn">✕</button>
+              </div>
+              <div class="sim-flyout-tabs" id="sim-flyout-tab-list"></div>
+            </div>
+
+            <!-- Host Page Web Content -->
+            <div class="sim-page-content" id="sim-rail-page-content">
+              <div class="sim-page-hero">
+                <h2>GitHub: The developer platform</h2>
+                <p>Millions of developers and companies build, ship, and maintain their software on GitHub.</p>
+                <div class="sim-repo-card">
+                  <strong>tabbox / chrome-extension</strong>
+                  <p>Multi-mode vertical tab manager bypassing side panel minimums.</p>
+                  <div class="sim-repo-stats">★ 2.4k &nbsp; • &nbsp; TypeScript &nbsp; • &nbsp; MIT License</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simulation View 2: Docked Companion Window -->
+          <div class="sim-view" id="view-docked-window">
+            <div class="sim-dock-wrapper">
+              <div class="sim-dock-window">
+                <div class="sim-dock-bar">
+                  <span>TabBox Dock (180px)</span>
+                  <button id="sim-dock-resize-btn" class="sim-mini-btn">⇄ Snap</button>
+                </div>
+                <div class="sim-dock-tabs" id="sim-dock-tab-list"></div>
+              </div>
+              <div class="sim-main-window">
+                <div class="sim-page-hero">
+                  <h2>Main Chrome Window (Auto-Tiled)</h2>
+                  <p>When you activate Docked Window, your main browser window automatically shrinks to leave room on the screen edge without overlapping.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simulation View 3: Command Palette Bento Modal (Alt+B) -->
+          <div class="sim-view" id="view-command-grid">
+            <div class="sim-page-content">
+              <div class="sim-page-hero">
+                <h2>Browse Without Any Sidebar Consuming Screen Space</h2>
+                <p>Press <kbd>Alt</kbd> + <kbd>B</kbd> anywhere or click the button below to summon the glassmorphic Bento Command Palette.</p>
+                <button id="sim-open-modal-btn" class="btn btn-primary btn-sm">Summon Modal (Alt+B)</button>
+              </div>
+            </div>
+            <!-- Glassmorphic Modal Overlay -->
+            <div class="sim-modal-overlay" id="sim-modal-overlay">
+              <div class="sim-modal-box">
+                <div class="sim-modal-top">
+                  <input type="text" id="sim-modal-search" placeholder="Type to search tabs or use Arrow keys..." />
+                  <button id="sim-modal-close" class="sim-mini-btn">✕</button>
+                </div>
+                <div class="sim-modal-grid" id="sim-modal-tab-list"></div>
+                <div class="sim-modal-footer">
+                  <span><kbd>←↑↓→</kbd> Navigate</span>
+                  <span><kbd>Enter</kbd> Switch</span>
+                  <span><kbd>Esc</kbd> Dismiss</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Simulation View 4: Chrome Native Side Panel (Free Mode) -->
+          <div class="sim-view" id="view-sidepanel">
+            <div class="sim-sidepanel-layout">
+              <div class="sim-page-content">
+                <div class="sim-page-hero">
+                  <h2>Chrome Native Side Panel Baseline</h2>
+                  <p>The free tier operates inside Chrome's native side panel with our interactive 2 to 6 column Bento Grid slider.</p>
+                </div>
+              </div>
+              <div class="sim-sidepanel-panel">
+                <div class="sim-panel-controls">
+                  <div class="sim-slider-row">
+                    <span>Columns:</span>
+                    <input type="range" id="sim-side-cols" min="2" max="6" value="3" />
+                    <span id="sim-side-col-badge">3</span>
+                  </div>
+                  <button id="sim-side-sleep" class="sim-mini-btn primary">💤 Sleep RAM</button>
+                </div>
+                <div class="sim-panel-grid" id="sim-panel-tab-list"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture Deep Dive Section -->
+  <section class="features-section" id="modes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">4 Architectural Modes</span>
+        <h2 class="section-title">One Extension. Total Spatial Freedom.</h2>
+        <p class="section-subtitle">No other tab manager gives you the choice of how your workspace interfaces with your OS.</p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Architecture 1 -->
+        <div class="feature-card highlight">
+          <div class="feature-header">
+            <div class="feature-icon icon-blue">☵</div>
+            <span class="badge pro">PRO</span>
+          </div>
+          <h3>In-Page Shadow DOM Rail</h3>
+          <p>Injected directly into webpages inside an isolated Shadow DOM. Bypasses Chrome's 320px width floor, snapping down to a 56px mini-strip with instant 120ms hover-peek expansion.</p>
+          <ul class="feature-points">
+            <li>Snaps to 56px mini-box strip</li>
+            <li>Smooth 120ms hover-peek to 240px</li>
+            <li>Zero CSS bleed into host websites</li>
+          </ul>
+        </div>
+
+        <!-- Architecture 1B -->
+        <div class="feature-card highlight">
+          <div class="feature-header">
+            <div class="feature-icon icon-purple">◓</div>
+            <span class="badge pro">PRO</span>
+          </div>
+          <h3>Floating Chat Circle Launcher</h3>
+          <p>Prefer 100% full-screen browsing with zero layout shift? The floating chat bubble sits quietly on the screen edge, showing your tab count, and expands on hover or click.</p>
+          <ul class="feature-points">
+            <li>Zero page margin displacement</li>
+            <li>Draggable vertically along screen edge</li>
+            <li>Live glowing tab count badge</li>
+          </ul>
+        </div>
+
+        <!-- Architecture 2 -->
+        <div class="feature-card">
+          <div class="feature-header">
+            <div class="feature-icon icon-green">◫</div>
+            <span class="badge pro">PRO</span>
+          </div>
+          <h3>Synchronized Docked Window</h3>
+          <p>Spawns a frameless companion window magnet-tiled to your primary browser. Automatically shifts and tiles windows on bounds changes.</p>
+          <ul class="feature-points">
+            <li>Auto-resizes when main window moves</li>
+            <li>Multi-monitor support</li>
+            <li>1-click 120px ↔ 260px snap toggle</li>
+          </ul>
+        </div>
+
+        <!-- Architecture 3 -->
+        <div class="feature-card">
+          <div class="feature-header">
+            <div class="feature-icon icon-amber">⌘</div>
+            <span class="badge pro">PRO</span>
+          </div>
+          <h3>Command Palette Bento Modal</h3>
+          <p>Arc-style keyboard switcher. Press <code>Alt+B</code> to summon a centered glassmorphic Bento grid modal anywhere. Navigate with arrow keys and switch in milliseconds.</p>
+          <ul class="feature-points">
+            <li>Arrow key & Enter tab switching</li>
+            <li>Instant fuzzy title & URL search</li>
+            <li>Middle click / Delete to close tabs</li>
+          </ul>
+        </div>
+
+        <!-- Architecture 4 -->
+        <div class="feature-card">
+          <div class="feature-header">
+            <div class="feature-icon icon-indigo">⊞</div>
+            <span class="badge free">FREE</span>
+          </div>
+          <h3>2 to 6 Column Bento Side Panel</h3>
+          <p>The standard baseline. Transforms Chrome's native side panel into a visual grid of 2, 3, 4, 5, or 6 boxes per row with live thumbnails and RAM suspension.</p>
+          <ul class="feature-points">
+            <li>Free forever with zero paywalls</li>
+            <li>1-click 50/50 Dual Split Tab</li>
+            <li>Tab sleep to reclaim hundreds of MB of RAM</li>
+          </ul>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="feature-card">
+          <div class="feature-header">
+            <div class="feature-icon icon-rose">🛡️</div>
+            <span class="badge free">CORE</span>
+          </div>
+          <h3>Local-First & Zero Telemetry</h3>
+          <p>Your tab titles, history, screenshots, and workspace sessions never leave your local device. 100% private, compliant with Chrome Manifest V3 security rules.</p>
+          <ul class="feature-points">
+            <li>No cloud database required</li>
+            <li>No background tracking or ad scripts</li>
+            <li>Instant offline performance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Competitor Comparison Section -->
+  <section class="comparison-section" id="comparison">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Direct Comparison</span>
+        <h2 class="section-title">How TabBox Compares to the Field</h2>
+        <p class="section-subtitle">See why power users are switching from heavy subscription tools to TabBox.</p>
+      </div>
+
+      <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Feature / Capability</th>
+              <th class="col-highlight">TabBox</th>
+              <th>Chrome Side Panel</th>
+              <th>Workona</th>
+              <th>Partizion</th>
+              <th>Toby</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Bypasses 320px Width Floor</strong></td>
+              <td class="col-highlight">✅ Yes (56px or 0px Bubble)</td>
+              <td>❌ No (Rigid 320px)</td>
+              <td>❌ No</td>
+              <td>❌ No</td>
+              <td>❌ No</td>
+            </tr>
+            <tr>
+              <td><strong>Multi-Mode Architecture</strong><br><small>(Rail, Dock, Modal, Panel)</small></td>
+              <td class="col-highlight">✅ 4 Modes</td>
+              <td>❌ 1 Mode only</td>
+              <td>❌ 1 Mode only</td>
+              <td>❌ 1 Mode only</td>
+              <td>❌ 1 Mode only</td>
+            </tr>
+            <tr>
+              <td><strong>2 to 6 Column Bento Grid</strong></td>
+              <td class="col-highlight">✅ Yes (Dynamic slider)</td>
+              <td>❌ Single column list</td>
+              <td>❌ Single column list</td>
+              <td>❌ Columns only</td>
+              <td>❌ Card boards only</td>
+            </tr>
+            <tr>
+              <td><strong>Floating Chat Bubble Launcher</strong></td>
+              <td class="col-highlight">✅ Yes (Zero margin shift)</td>
+              <td>❌ No</td>
+              <td>❌ No</td>
+              <td>❌ No</td>
+              <td>❌ No</td>
+            </tr>
+            <tr>
+              <td><strong>Global Command Modal (<code>Alt+B</code>)</strong></td>
+              <td class="col-highlight">✅ Yes (Instant keyboard)</td>
+              <td>❌ No</td>
+              <td>❌ No</td>
+              <td>❌ No</td>
+              <td>❌ No</td>
+            </tr>
+            <tr>
+              <td><strong>1-Click Dual Split Tab</strong></td>
+              <td class="col-highlight">✅ Yes (30/70, 50/50, 70/30)</td>
+              <td>❌ Manual multi-window</td>
+              <td>❌ No</td>
+              <td>❌ No</td>
+              <td>❌ No</td>
+            </tr>
+            <tr>
+              <td><strong>100% Client-Side Privacy</strong></td>
+              <td class="col-highlight">✅ Zero remote servers</td>
+              <td>✅ Local</td>
+              <td>❌ Cloud DB required</td>
+              <td>❌ Cloud DB required</td>
+              <td>❌ Cloud DB required</td>
+            </tr>
+            <tr class="price-row">
+              <td><strong>Pricing Model</strong></td>
+              <td class="col-highlight"><strong>Free + $10 Lifetime (or $4/yr)</strong></td>
+              <td>Free</td>
+              <td>$84.00 / year</td>
+              <td>$144.00 / year</td>
+              <td>$54.00 / year</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="pricing-section" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">No-Brainer Pricing</span>
+        <h2 class="section-title">Cheaper Than Coffee. Yours Forever.</h2>
+        <p class="section-subtitle">No $84/year subscriptions. Start free with our native Side Panel mode, or unlock all Pro spatial modes for just $10 once or $4 a year.</p>
+      </div>
+
+      <div class="pricing-cards">
+        <!-- Free Tier Card -->
+        <div class="pricing-card">
+          <div class="pricing-badge-wrapper">
+            <span class="pricing-badge">Free Forever</span>
+          </div>
+          <h3 class="plan-title">TabBox Core</h3>
+          <p class="plan-desc">For users who want a clean visual upgrade to Chrome's native Side Panel.</p>
+          <div class="plan-price">
+            <span class="currency">$</span>
+            <span class="amount">0</span>
+            <span class="period">/ forever</span>
+          </div>
+          <ul class="plan-features">
+            <li>✓ Chrome Native Side Panel mode</li>
+            <li>✓ 2 to 6 column Bento Grid slider</li>
+            <li>✓ Live tab search & instant filtering</li>
+            <li>✓ Smart Tab Snooze to reclaim RAM</li>
+            <li>✓ Color-coded Tab Groups integration</li>
+            <li>✓ 100% private, client-side only</li>
+          </ul>
+          <a href="tabbox-extension.zip" download class="btn btn-secondary btn-block">
+            Download Free (.zip)
+          </a>
+        </div>
+
+        <!-- Pro Lifetime Deal Card (Featured) -->
+        <div class="pricing-card featured">
+          <div class="pricing-badge-wrapper">
+            <span class="pricing-badge ltd">⭐ Most Popular • One-Time Coffee Deal</span>
+          </div>
+          <h3 class="plan-title">TabBox Pro Lifetime</h3>
+          <p class="plan-desc">For power users who want all 4 modes permanently with zero recurring bills.</p>
+          <div class="plan-price">
+            <span class="currency">$</span>
+            <span class="amount">10</span>
+            <span class="period">one-time payment</span>
+          </div>
+          <div class="ltd-strike">
+            <small>Pay once • <strong>No subscriptions ever</strong></small>
+          </div>
+          <ul class="plan-features">
+            <li><strong>✓ Everything in Free, plus:</strong></li>
+            <li>✓ <strong>Architecture 1:</strong> In-Page Rail (snaps to 56px, hover-peek)</li>
+            <li>✓ <strong>Architecture 1B:</strong> Floating Chat Bubble Launcher (0px margin shift)</li>
+            <li>✓ <strong>Architecture 2:</strong> Synchronized Docked Companion Window</li>
+            <li>✓ <strong>Architecture 3:</strong> Command Palette Bento Modal (<code>Alt+B</code>)</li>
+            <li>✓ 1-Click Native Dual Split Tab (presets 30/70, 50/50, 70/30)</li>
+            <li>✓ Unlimited Saved Workspaces & Sessions</li>
+            <li>✓ Lifetime license key • All future updates included</li>
+          </ul>
+          <a href="https://komunisconcept.org.ng/tabbox-auto/license_verify.php?action=checkout&tier=lifetime&redirect=true" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block btn-glow">
+            Get Pro Lifetime ($10)
+          </a>
+        </div>
+
+        <!-- Pro Annual Card -->
+        <div class="pricing-card">
+          <div class="pricing-badge-wrapper">
+            <span class="pricing-badge">Micro-Annual Plan</span>
+          </div>
+          <h3 class="plan-title">TabBox Pro Annual</h3>
+          <p class="plan-desc">For users who prefer a tiny annual fee to support ongoing development.</p>
+          <div class="plan-price">
+            <span class="currency">$</span>
+            <span class="amount">4</span>
+            <span class="period">/ year</span>
+          </div>
+          <p class="plan-subtext">That's just ~$0.33/month • Cancel anytime</p>
+          <ul class="plan-features">
+            <li>✓ All 4 Architecture Modes unlocked</li>
+            <li>✓ Floating Chat Bubble & 56px Rail</li>
+            <li>✓ Docked Companion Window</li>
+            <li>✓ Command Modal & Split Tab</li>
+            <li>✓ Unlimited Workspaces & Sessions</li>
+            <li>✓ Full access to all Pro features for 1 year</li>
+          </ul>
+          <a href="https://komunisconcept.org.ng/tabbox-auto/license_verify.php?action=checkout&tier=annual&redirect=true" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-block">
+            Start Annual Plan ($4/yr)
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 30-Second Quick Setup Guide -->
+  <section class="install-section" id="install">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Quick Setup</span>
+        <h2 class="section-title">Install in 30 Seconds</h2>
+        <p class="section-subtitle">No signup required. Test TabBox directly in Chrome, Brave, or Edge in 3 clicks.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h4>Download & Unzip</h4>
+            <p>Download the pre-compiled distribution package below and unzip the archive to any folder on your computer.</p>
+            <a href="tabbox-extension.zip" download class="btn btn-primary btn-sm step-btn">
+              Download TabBox (.zip)
+            </a>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h4>Open Chrome Extensions</h4>
+            <p>Go to <code>chrome://extensions/</code> in your browser bar and toggle <strong>Developer mode</strong> ON in the upper-right corner.</p>
+          </div>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h4>Click "Load unpacked"</h4>
+            <p>Click <strong>Load unpacked</strong>, pick the extracted folder, and press <kbd>Alt</kbd> + <kbd>B</kbd> or click the toolbar icon to launch!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-accordion">
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Why did you build 4 different architecture modes instead of just one?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-answer">
+            Every browser user has different screen sizes and habits. On a 13-inch laptop, Chrome's 320px side panel floor wastes huge amounts of horizontal space. The 56px In-Page Rail or the Floating Chat Bubble solves this completely with 0px margin shift. On an ultrawide monitor, the Docked Companion Window or 6-column Bento Grid is king. TabBox lets you switch between all of them on the fly.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Will TabBox slow down my browser or consume tons of RAM?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-answer">
+            No. TabBox is built on modern Manifest V3 standards with a lightweight background service worker that sleeps when inactive. Additionally, TabBox includes a 1-click <strong>Tab Snoozer</strong> that discards background tab memory without closing your tabs, actively <em>reclaiming</em> RAM.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How does the Floating Chat Bubble launcher work?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-answer">
+            The Chat Bubble is isolated inside a Shadow DOM container on the edge of your screen. Unlike sidebars that push page margins, the Chat Bubble leaves your webpage at 100% full width. Hovering over it (with a 150ms intent debounce) or clicking it slides out the glassmorphic Bento Tab Flyout. You can also drag the bubble vertically up or down to keep it away from site content.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How does the $10 Lifetime License work?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-answer">
+            The $10 Lifetime Deal is a one-time payment powered by ExtensionPay (Stripe). You receive a permanent license key attached to your Google account or email that unlocks all Pro modes on all your computers forever, with no recurring subscriptions.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Is my browsing data or tab history stored on your servers?</span>
+            <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-answer">
+            Zero data is ever transmitted to our servers. TabBox operates 100% locally using Chrome's native <code>chrome.storage.local</code> API.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <div class="container banner-inner">
+      <h2>Ready to Reclaim Your Screen Space?</h2>
+      <p>Download TabBox free today and experience true spatial tab freedom.</p>
+      <div class="banner-actions">
+        <a href="tabbox-extension.zip" download class="btn btn-white btn-lg">
+          Download TabBox Extension (.zip)
+        </a>
+        <a href="https://komunisconcept.org.ng/tabbox-auto/license_verify.php?action=checkout&tier=lifetime&redirect=true" target="_blank" rel="noopener noreferrer" class="btn btn-outline-white btn-lg">
+          Unlock Pro Lifetime ($10)
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-left">
+        <div class="nav-brand">
+          <div class="brand-icon"><div class="mini-grid"><span></span><span></span><span></span><span></span></div></div>
+          <span class="brand-name">TabBox</span>
+        </div>
+        <p>The Multi-Mode Visual Tab Workspace for Google Chrome.</p>
+      </div>
+      <div class="footer-right">
+        <span>Shortcut: <kbd>Alt</kbd> + <kbd>B</kbd></span>
+        <span>•</span>
+        <span>Manifest V3</span>
+        <span>•</span>
+        <span>Zero Telemetry</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

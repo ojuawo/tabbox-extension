@@ -1,0 +1,22 @@
+# Node & Dependencies
+node_modules/
+package-lock.json
+
+# Private Credentials & Configs
+ftp_config.json
+.env
+*.local
+
+# State & Logs
+automations/.state.json
+automations/cron_log.txt
+automations/server_payload/licenses.json
+automations/server_payload/license_log.txt
+*.log
+__pycache__/
+*.pyc
+*.glb
+
+# OS & Temp
+.DS_Store
+Thumbs.db
