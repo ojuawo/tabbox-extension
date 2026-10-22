@@ -3,6 +3,11 @@
   "version": "1.2.0",
   "description": "Multi-Mode Vertical Tab Manager for Chrome Manifest V3",
   "main": "background.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ojuawo/tabbox-extension.git"
+  },
+  "homepage": "https://github.com/ojuawo/tabbox-extension#readme",
   "scripts": {
     "social": "node automations/scheduler.js",
     "radar": "node automations/reddit_radar.js",
