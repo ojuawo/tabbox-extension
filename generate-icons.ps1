@@ -36,6 +36,7 @@ function Generate-Icon($size, $path) {
 }
 
 Generate-Icon 16 'icons/icon16.png'
+Generate-Icon 32 'icons/icon32.png'
 Generate-Icon 48 'icons/icon48.png'
 Generate-Icon 128 'icons/icon128.png'
 Write-Output "Successfully generated extension icons."

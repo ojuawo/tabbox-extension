@@ -1,8 +1,10 @@
 {
   "manifest_version": 3,
   "name": "TabBox - Multi-Mode Grid Vertical Tabs",
+  "short_name": "TabBox",
   "version": "2.0.0",
-  "description": "Multi-Mode Architecture Sandbox: In-Page Shadow Rail, Docked Companion Window, Command Bento Modal, and Native Side Panel.",
+  "description": "Multi-mode vertical tab manager: Bento grid view, in-page margin rail, docked companion window, instant search, and tab snoozing.",
+  "homepage_url": "https://komunisconcept.org.ng",
   "permissions": [
     "tabs",
     "sidePanel",
@@ -15,7 +17,13 @@
     "<all_urls>"
   ],
   "action": {
-    "default_title": "TabBox — Click to Toggle / Switch Mode"
+    "default_title": "TabBox — Click to Toggle / Switch Mode",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
   },
   "background": {
     "service_worker": "background.js"
@@ -59,6 +67,7 @@
   ],
   "icons": {
     "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
   }

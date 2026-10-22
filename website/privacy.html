@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — TabBox</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .privacy-container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 32px 24px;
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      color: #1e293b;
+      line-height: 1.7;
+    }
+    .privacy-container h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+    .privacy-meta {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .privacy-container h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      margin-top: 28px;
+      margin-bottom: 12px;
+    }
+    .privacy-container p, .privacy-container ul {
+      font-size: 15px;
+      color: #475569;
+      margin-bottom: 16px;
+    }
+    .privacy-container ul {
+      padding-left: 24px;
+    }
+    .privacy-container li {
+      margin-bottom: 8px;
+    }
+    .badge-secure {
+      display: inline-block;
+      padding: 4px 10px;
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body style="background: #f8fafc;">
+  <div class="privacy-container">
+    <div class="badge-secure">🔒 100% Local-First & Zero-Tracking</div>
+    <h1>TabBox Privacy Policy</h1>
+    <div class="privacy-meta">Effective Date: October 22, 2026 • Published by Komunis Concept</div>
+
+    <p>At <strong>TabBox</strong> (a software product developed by <strong>Komunis Concept</strong>), we respect your personal privacy. This Privacy Policy outlines our commitment to transparency and explains how TabBox handles your data when using the Chrome extension and related services.</p>
+
+    <h2>1. The Single Purpose of TabBox</h2>
+    <p>TabBox is a productivity tool designed exclusively to manage, organize, and navigate your browser tabs through spatial bento grid layouts, in-page rails, edge-docked companion windows, and command palettes.</p>
+
+    <h2>2. Data Collection and Storage: 100% Local on Device</h2>
+    <p>TabBox operates on a strict <strong>local-first architecture</strong>:</p>
+    <ul>
+      <li><strong>Tab Information (URLs, Titles, Favicons):</strong> TabBox accesses tab metadata solely to render your open tabs, group them by website domain, and allow quick switching or search within your own browser session. This data never leaves your device.</li>
+      <li><strong>Tab Visual Snapshots:</strong> Live visual previews of tabs are captured locally using Chrome's native capture API and stored in temporary in-memory session storage (<code>chrome.storage.session</code>). They are immediately purged when tabs or the browser are closed.</li>
+      <li><strong>Workspaces and Settings:</strong> Saved workspaces, column counts, and user interface preferences are saved in your local browser profile (<code>chrome.storage.local</code>).</li>
+    </ul>
+
+    <h2>3. Zero Telemetry, Analytics, or Tracking</h2>
+    <p>TabBox does <strong>NOT</strong> collect, sell, lease, share, or monetize any user data. Specifically:</p>
+    <ul>
+      <li>We do NOT track your browsing history or keystrokes.</li>
+      <li>We do NOT inject any third-party ads, tracking pixels, or analytic beacons (e.g. Google Analytics or Mixpanel).</li>
+      <li>We do NOT store or transmit your cookies, passwords, or personal credentials.</li>
+    </ul>
+
+    <h2>4. Pro License Verification</h2>
+    <p>If you purchase or activate TabBox Pro ($10 Lifetime Deal or $4/Year plan), the extension communicates over encrypted HTTPS with our secure license server (<code>https://komunisconcept.org.ng/tabbox-auto/license_verify.php</code>) solely to validate your license key or email address. No browsing history or tab information is ever sent during license verification.</p>
+
+    <h2>5. Permissions Justification</h2>
+    <ul>
+      <li><code>tabs</code>: Required to read tab titles and URLs to display them in the side panel grid and manage tab switching/snoozing.</li>
+      <li><code>sidePanel</code>: Required to render the vertical Bento tab interface directly in Chrome's native sidebar.</li>
+      <li><code>storage</code>: Required to persist your column settings, workspace snapshots, and active mode preferences locally.</li>
+      <li><code>tabGroups</code>: Required to read and organize tabs into Chrome's native color-coded tab groups.</li>
+      <li><code>scripting</code> & <code>&lt;all_urls&gt;</code>: Required to inject the in-page vertical rail (Mode 1) and capture visual thumbnails for bento preview cards.</li>
+    </ul>
+
+    <h2>6. Contact & Support</h2>
+    <p>If you have any questions or feedback regarding this policy or TabBox, please contact us directly:</p>
+    <p><strong>Komunis Concept</strong><br>
+    Website: <a href="https://komunisconcept.org.ng">komunisconcept.org.ng</a><br>
+    Email: <a href="mailto:support@komunisconcept.org.ng">support@komunisconcept.org.ng</a></p>
+  </div>
+</body>
+</html>

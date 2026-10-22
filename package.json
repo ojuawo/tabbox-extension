@@ -1,6 +1,6 @@
 {
   "name": "tabbox-extension",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Multi-Mode Vertical Tab Manager for Chrome Manifest V3",
   "main": "background.js",
   "repository": {
@@ -16,7 +16,7 @@
     "setup-ftp-py": "python automations/ftp_cron_setup.py",
     "install-startup": "powershell -ExecutionPolicy Bypass -File automations/install-startup.ps1",
     "uninstall-startup": "powershell -ExecutionPolicy Bypass -File automations/uninstall-startup.ps1",
-    "pack": "powershell -Command \"Compress-Archive -Path manifest.json, background.js, content-rail.js, sidepanel.html, sidepanel.css, sidepanel.js, splitview.html, grid.html, grid.js, icons -DestinationPath tabbox-extension.zip -Force; Copy-Item tabbox-extension.zip website\\tabbox-extension.zip -Force\""
+    "pack": "powershell -Command \"Compress-Archive -Path manifest.json, background.js, content-rail.js, sidepanel.html, sidepanel.css, sidepanel.js, splitview.html, splitview.js, grid.html, grid.js, icons -DestinationPath tabbox-extension.zip -Force; Copy-Item tabbox-extension.zip website\\tabbox-extension.zip -Force\""
   },
   "keywords": [
     "chrome-extension",
@@ -25,7 +25,7 @@
     "manifest-v3",
     "tab-manager"
   ],
-  "author": "TabBox Developer",
+  "author": "Komunis Concept",
   "license": "MIT",
   "dependencies": {
     "basic-ftp": "^6.2.3"
