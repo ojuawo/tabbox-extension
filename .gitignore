@@ -6,6 +6,7 @@ package-lock.json
 ftp_config.json
 .env
 *.local
+automations/server_payload/config.json
 
 # State & Logs
 automations/.state.json

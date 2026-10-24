@@ -25,11 +25,11 @@ $config = file_exists($configFile) ? json_decode(file_get_contents($configFile),
 $secretToken = $config['secret_token'] ?? '1f1eb5c84cc25b4c4b4b99c13de2f470';
 $signingSalt = 'TabBox_Komunis_Pro_SecretSalt_2026';
 
-// Paystack & Stripe Keys
-$paystackSecretKey = $config['paystack_secret_key'] ?? 'sk_test_c535bf8528358809243f6da4f9645e0491c6414c';
-$paystackPublicKey = $config['paystack_public_key'] ?? 'pk_test_48f3bbbfaacf84dea97744fc117d9191fcebd239';
-$stripeLifetimeUrl = $config['stripe_lifetime_url'] ?? 'https://buy.stripe.com/test_tabbox_lifetime_10';
-$stripeAnnualUrl = $config['stripe_annual_url'] ?? 'https://buy.stripe.com/test_tabbox_annual_4';
+// Paystack Keys (Securely loaded from config.json or environment variables)
+$paystackSecretKey = $config['paystack_secret_key'] ?? (getenv('PAYSTACK_SECRET_KEY') ?: '');
+$paystackPublicKey = $config['paystack_public_key'] ?? (getenv('PAYSTACK_PUBLIC_KEY') ?: '');
+$stripeLifetimeUrl = $config['stripe_lifetime_url'] ?? '';
+$stripeAnnualUrl = $config['stripe_annual_url'] ?? '';
 
 // Initialize licenses store if not present
 if (!file_exists($licensesFile)) {
@@ -427,59 +427,62 @@ switch ($action) {
             .badge { display: inline-block; padding: 4px 10px; background: rgba(99, 102, 241, 0.15); color: #818cf8; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; }
             h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
             p.sub { font-size: 13px; color: #94a3b8; margin-bottom: 20px; }
-            .order-summary { background: #21242d; border-radius: 10px; padding: 14px 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #2f333f; }
+            .order-summary { background: #21242d; border-radius: 10px; padding: 14px 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #2f333f; }
             .order-title { font-weight: 700; font-size: 14px; }
             .order-price { font-size: 18px; font-weight: 800; color: #818cf8; }
+            .features-list { background: #13151b; border: 1px solid #282c35; border-radius: 10px; padding: 14px 16px; margin-bottom: 20px; font-size: 12.5px; line-height: 1.7; color: #cbd5e1; }
+            .features-list div { display: flex; align-items: center; gap: 8px; }
+            .features-list span.check { color: #10b981; font-weight: bold; }
             .input-group { margin-bottom: 18px; }
             .input-label { display: block; font-size: 12px; font-weight: 600; color: #94a3b8; margin-bottom: 6px; }
             .email-input { width: 100%; padding: 11px 14px; background: #21242d; border: 1px solid #333842; border-radius: 8px; color: #fff; font-size: 14px; outline: none; }
             .email-input:focus { border-color: #6366f1; }
-            .payment-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
-            .pay-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 13px 18px; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; text-align: center; transition: all 0.15s ease; }
-            .btn-paystack { background: linear-gradient(135deg, #09a5db, #0284c7); color: #fff; width: 100%; }
-            .btn-paystack:hover { opacity: 0.95; transform: translateY(-1px); }
-            .btn-stripe { background: #262933; color: #cbd5e1; border: 1px solid #3a3f4d; }
-            .btn-stripe:hover { background: #2f3442; color: #fff; }
-            .bank-box { background: #13151b; border: 1px dashed #333842; border-radius: 10px; padding: 14px; font-size: 12px; line-height: 1.6; color: #cbd5e1; margin-top: 10px; }
-            .bank-title { font-weight: 700; color: #f8fafc; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-            .footer-note { font-size: 11px; color: #64748b; text-align: center; margin-top: 18px; line-height: 1.4; }
+            .payment-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
+            .pay-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 20px; border-radius: 8px; font-size: 14.5px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; text-align: center; transition: all 0.15s ease; }
+            .btn-paystack { background: linear-gradient(135deg, #09a5db, #0284c7); color: #fff; width: 100%; box-shadow: 0 4px 14px rgba(9, 165, 219, 0.4); }
+            .btn-paystack:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(9, 165, 219, 0.5); }
+            .methods-row { display: flex; justify-content: center; gap: 12px; font-size: 11px; color: #94a3b8; margin-top: 6px; }
+            .footer-note { font-size: 11px; color: #64748b; text-align: center; margin-top: 18px; line-height: 1.4; border-top: 1px solid #282c35; padding-top: 14px; }
           </style>
           <script src="https://js.paystack.co/v1/inline.js"></script>
         </head>
         <body>
           <div class="checkout-card">
-            <div class="badge">⚡ SECURE CHECKOUT</div>
+            <div class="badge">⚡ SECURE PAYSTACK CHECKOUT</div>
             <h2>Upgrade to TabBox Pro</h2>
-            <p class="sub">Choose your payment option to unlock all 4 architecture modes and unlimited workspaces.</p>
+            <p class="sub">Complete your payment securely via Paystack to unlock all 4 architecture modes instantly.</p>
 
             <div class="order-summary">
               <div class="order-title">TabBox Pro <?php echo htmlspecialchars($tierName); ?></div>
               <div class="order-price"><?php echo htmlspecialchars($tierPrice); ?> <small style="font-size:11.5px; color:#94a3b8;">(<?php echo htmlspecialchars($tierNgn); ?>)</small></div>
             </div>
 
+            <div class="features-list">
+              <div><span class="check">✓</span> All 4 Architecture Modes (Docked, Margin Rail, Command Modal, Side Panel)</div>
+              <div><span class="check">✓</span> Dynamic 2–6 Column Bento Grid & Visual Thumbnails</div>
+              <div><span class="check">✓</span> Inactive Tab Memory Saver & Keyboard Shortcuts</div>
+              <div><span class="check">✓</span> Instant License Key Generation & Lifetime Support</div>
+            </div>
+
             <div class="input-group">
-              <label class="input-label" for="cust-email">Your Email Address (for license delivery):</label>
+              <label class="input-label" for="cust-email">Your Email Address (for license delivery & receipt):</label>
               <input type="email" id="cust-email" class="email-input" placeholder="e.g. you@example.com" value="<?php echo htmlspecialchars($email); ?>" />
             </div>
 
             <div class="payment-options">
               <button class="pay-btn btn-paystack" id="paystack-popup-btn" onclick="payWithPaystack()">
-                💳 Pay with Paystack (Cards, Apple Pay, Transfer)
+                💳 Pay <?php echo htmlspecialchars($tierNgn); ?> with Paystack
               </button>
-              <a href="<?php echo htmlspecialchars($stripeLifetimeUrl); ?>" target="_blank" class="pay-btn btn-stripe">
-                🌍 International Stripe / Card
-              </a>
-            </div>
-
-            <div class="bank-box">
-              <div class="bank-title">🏛️ Direct Bank Transfer (Nigeria / NGN)</div>
-              <div>Account Name: <b>Komunis Concept</b></div>
-              <div>Amount: <b><?php echo htmlspecialchars($tierNgn); ?></b> (or $10)</div>
-              <div style="margin-top:6px; color:#94a3b8;">After transfer, send proof to <b>support@komunisconcept.org.ng</b> for instant manual activation.</div>
+              <div class="methods-row">
+                <span>✓ Debit / Credit Cards</span>
+                <span>✓ Bank Transfer</span>
+                <span>✓ Apple Pay</span>
+                <span>✓ USSD</span>
+              </div>
             </div>
 
             <div class="footer-note">
-              🔒 Powered by Paystack (256-Bit SSL) • Instant License Key Delivery • Komunis Concept
+              🔒 Powered Exclusively by Paystack (256-Bit SSL) • Instant Automated Key Generation • Komunis Concept
             </div>
           </div>
 
@@ -618,7 +621,7 @@ switch ($action) {
             'provider' => 'Komunis Concept (komunisconcept.org.ng)',
             'version' => '2.0.0',
             'status' => 'online',
-            'payment_gateways' => ['paystack', 'stripe', 'bank_transfer'],
+            'payment_gateways' => ['paystack'],
             'pricing' => [
                 'free' => [
                     'name' => 'Free Forever',
