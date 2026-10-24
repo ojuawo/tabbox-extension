@@ -272,7 +272,7 @@ switch ($action) {
     // 3. PAYSTACK VERIFY TRANSACTION & FULFILL LICENSE
     // ========================================================================
     case 'paystack_verify': {
-        $reference = trim($_GET['reference'] ?? $input['reference'] ?? '');
+        $reference = trim($_GET['reference'] ?? $_GET['trxref'] ?? $input['reference'] ?? '');
         if (empty($reference)) {
             http_response_code(400);
             echo "Missing transaction reference.";
