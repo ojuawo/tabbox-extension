@@ -29,9 +29,12 @@ $config = file_exists($configFile) ? json_decode(file_get_contents($configFile),
 $secretToken = $config['secret_token'] ?? '1f1eb5c84cc25b4c4b4b99c13de2f470';
 $signingSalt = 'TabBox_Komunis_Pro_SecretSalt_2026';
 
-// Stripe Payment Links (can be configured in config.json or fallback to Komunis Concept direct checkout)
+// Stripe & Paystack Payment Links (can be configured in config.json or fallback to Komunis Concept direct checkout)
 $stripeLifetimeUrl = $config['stripe_lifetime_url'] ?? 'https://buy.stripe.com/test_tabbox_lifetime_10';
 $stripeAnnualUrl = $config['stripe_annual_url'] ?? 'https://buy.stripe.com/test_tabbox_annual_4';
+$paystackLifetimeUrl = $config['paystack_lifetime_url'] ?? 'https://paystack.com/pay/tabbox-pro-lifetime';
+$paystackAnnualUrl = $config['paystack_annual_url'] ?? 'https://paystack.com/pay/tabbox-pro-annual';
+$paystackSecretKey = $config['paystack_secret_key'] ?? '';
 
 // Initialize licenses store if not present
 if (!file_exists($licensesFile)) {
@@ -229,12 +232,89 @@ switch ($action) {
         ];
         saveLicenses($licensesFile, $licenses);
 
-        // Target URL
-        $targetUrl = ($tier === 'annual' || $tier === 'year') ? $stripeAnnualUrl : $stripeLifetimeUrl;
+        // Target URL by payment method (Paystack, Stripe, or Hosted Portal)
+        $method = strtolower($_GET['method'] ?? $input['method'] ?? 'paystack');
+        if ($method === 'stripe') {
+            $targetUrl = ($tier === 'annual' || $tier === 'year') ? $stripeAnnualUrl : $stripeLifetimeUrl;
+        } else {
+            $targetUrl = ($tier === 'annual' || $tier === 'year') ? $paystackAnnualUrl : $paystackLifetimeUrl;
+        }
 
-        // If redirect requested
-        if (isset($_GET['redirect']) && $_GET['redirect'] === 'true') {
+        // If direct redirect requested
+        if (isset($_GET['redirect']) && $_GET['redirect'] === 'true' && isset($_GET['method'])) {
             header("Location: {$targetUrl}");
+            exit;
+        }
+
+        // If hosted checkout page requested or generic redirect
+        if (isset($_GET['redirect']) && $_GET['redirect'] === 'true') {
+            header('Content-Type: text/html; charset=utf-8');
+            $tierName = ($tier === 'annual' || $tier === 'year') ? 'Micro-Annual ($4/yr)' : 'Lifetime Deal ($10)';
+            $tierPrice = ($tier === 'annual' || $tier === 'year') ? '$4.00' : '$10.00';
+            $tierNgn = ($tier === 'annual' || $tier === 'year') ? '₦6,000' : '₦15,000';
+            ?>
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>TabBox Pro Checkout — Komunis Concept</title>
+              <style>
+                * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+                body { background: #0f1115; color: #f8fafc; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+                .checkout-card { background: #181a20; border: 1px solid #282c35; border-radius: 16px; max-width: 460px; width: 100%; padding: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+                .badge { display: inline-block; padding: 4px 10px; background: rgba(99, 102, 241, 0.15); color: #818cf8; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 12px; }
+                h2 { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+                p.sub { font-size: 13px; color: #94a3b8; margin-bottom: 20px; }
+                .order-summary { background: #21242d; border-radius: 10px; padding: 14px 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+                .order-title { font-weight: 700; font-size: 14px; }
+                .order-price { font-size: 18px; font-weight: 800; color: #818cf8; }
+                .payment-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+                .pay-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 18px; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; transition: all 0.15s ease; border: none; cursor: pointer; text-align: center; }
+                .btn-paystack { background: linear-gradient(135deg, #09a5db, #0284c7); color: #fff; }
+                .btn-paystack:hover { opacity: 0.95; transform: translateY(-1px); }
+                .btn-stripe { background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; }
+                .btn-stripe:hover { opacity: 0.95; transform: translateY(-1px); }
+                .bank-box { background: #13151b; border: 1px dashed #333842; border-radius: 10px; padding: 14px; font-size: 12px; line-height: 1.6; color: #cbd5e1; }
+                .bank-title { font-weight: 700; color: #f8fafc; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+                .footer-note { font-size: 11px; color: #64748b; text-align: center; margin-top: 18px; line-height: 1.4; }
+              </style>
+            </head>
+            <body>
+              <div class="checkout-card">
+                <div class="badge">⚡ SECURE CHECKOUT</div>
+                <h2>Upgrade to TabBox Pro</h2>
+                <p class="sub">Choose your preferred payment method below to unlock all 4 architecture modes and unlimited workspaces.</p>
+
+                <div class="order-summary">
+                  <div class="order-title">TabBox Pro <?php echo htmlspecialchars($tierName); ?></div>
+                  <div class="order-price"><?php echo htmlspecialchars($tierPrice); ?> <small style="font-size:11px; color:#94a3b8;">(<?php echo htmlspecialchars($tierNgn); ?>)</small></div>
+                </div>
+
+                <div class="payment-options">
+                  <a href="<?php echo htmlspecialchars($paystackLifetimeUrl); ?>" target="_blank" class="pay-btn btn-paystack">
+                    💳 Pay via Paystack (Cards, Apple Pay, Transfer)
+                  </a>
+                  <a href="<?php echo htmlspecialchars($stripeLifetimeUrl); ?>" target="_blank" class="pay-btn btn-stripe">
+                    🌍 Pay via Stripe / International Card
+                  </a>
+                </div>
+
+                <div class="bank-box">
+                  <div class="bank-title">🏛️ Direct Bank Transfer (Nigeria / NGN)</div>
+                  <div>Bank: <b>Wema Bank / Kuda / GTBank</b> (Komunis Concept)</div>
+                  <div>Account Name: <b>Komunis Concept</b></div>
+                  <div>Amount: <b><?php echo htmlspecialchars($tierNgn); ?></b> (or $10 / $4)</div>
+                  <div style="margin-top:6px; color:#94a3b8;">After transfer, send receipt to <b>support@komunisconcept.org.ng</b> or WhatsApp for instant key activation.</div>
+                </div>
+
+                <div class="footer-note">
+                  🔒 256-Bit SSL Encrypted • Instant Key Delivery • Komunis Concept (komunisconcept.org.ng)
+                </div>
+              </div>
+            </body>
+            </html>
+            <?php
             exit;
         }
 
@@ -243,6 +323,8 @@ switch ($action) {
             'tier' => $tier,
             'price' => ($tier === 'annual' || $tier === 'year') ? '$4.00 / year' : '$10.00 one-time',
             'checkout_url' => $targetUrl,
+            'paystack_url' => ($tier === 'annual' || $tier === 'year') ? $paystackAnnualUrl : $paystackLifetimeUrl,
+            'stripe_url' => ($tier === 'annual' || $tier === 'year') ? $stripeAnnualUrl : $stripeLifetimeUrl,
             'allocated_key' => $newKey,
             'message' => 'Checkout session ready.'
         ]);
@@ -250,7 +332,46 @@ switch ($action) {
     }
 
     // ========================================================================
-    // 3. ADMIN KEY GENERATOR (Protected by secret token)
+    // 3. PAYSTACK WEBHOOK HANDLER
+    // ========================================================================
+    case 'paystack_webhook': {
+        $rawPayload = file_get_contents('php://input');
+        $signature = $_SERVER['HTTP_X_PAYSTACK_SIGNATURE'] ?? '';
+
+        if (!empty($paystackSecretKey) && hash_hmac('sha512', $rawPayload, $paystackSecretKey) !== $signature) {
+            http_response_code(401);
+            echo json_encode(['error' => 'Invalid webhook signature']);
+            exit;
+        }
+
+        $event = json_decode($rawPayload, true);
+        if (($event['event'] ?? '') === 'charge.success') {
+            $data = $event['data'] ?? [];
+            $customerEmail = $data['customer']['email'] ?? 'customer@tabbox.pro';
+            $amount = ($data['amount'] ?? 0) / 100;
+            $tier = ($amount <= 10 || $amount <= 7000) ? 'annual' : 'lifetime';
+
+            $newKey = generateSignedKey($tier, $signingSalt);
+            $licenses = getLicenses($licensesFile);
+            $licenses[$newKey] = [
+                'tier' => $tier,
+                'email' => $customerEmail,
+                'created_at' => date('c'),
+                'expires_at' => ($tier === 'annual') ? date('c', strtotime('+1 year')) : null,
+                'status' => 'active',
+                'note' => "Paystack Reference: " . ($data['reference'] ?? 'unknown')
+            ];
+            saveLicenses($licensesFile, $licenses);
+
+            @file_put_contents($logFile, date('c') . " - Paystack charge.success: {$newKey} issued to {$customerEmail}\n", FILE_APPEND);
+        }
+
+        echo json_encode(['status' => 'received']);
+        exit;
+    }
+
+    // ========================================================================
+    // 4. ADMIN KEY GENERATOR (Protected by secret token)
     // ========================================================================
     case 'generate': {
         $token = $_GET['token'] ?? $input['token'] ?? '';

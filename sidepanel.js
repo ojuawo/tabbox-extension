@@ -142,6 +142,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Capture active tab screenshot
   captureActiveTabPreview();
+
+  // Setup Onboarding Tour & check for new install
+  setupTourEventListeners();
+  const tourPref = await chrome.storage.local.get(['hasSeenOnboarding']);
+  if (!tourPref.hasSeenOnboarding) {
+    setTimeout(() => startOnboardingTour(false), 600);
+  }
 });
 
 function setupModeSwitcherAndDockedObserver() {
@@ -367,6 +374,151 @@ function setupPaywallEventListeners() {
       }
     });
   }
+}
+
+// ============================================================
+// INTERACTIVE ONBOARDING TOUR FOR NEW INSTALLS
+// ============================================================
+const tourHelpBtn = document.getElementById('tour-help-btn');
+const onboardingTourOverlay = document.getElementById('onboarding-tour-overlay');
+const tourStepPill = document.getElementById('tour-step-pill');
+const tourCloseBtn = document.getElementById('tour-close-btn');
+const tourSkipBtn = document.getElementById('tour-skip-btn');
+const tourPrevBtn = document.getElementById('tour-prev-btn');
+const tourNextBtn = document.getElementById('tour-next-btn');
+const tourIcon = document.getElementById('tour-icon');
+const tourTitle = document.getElementById('tour-title');
+const tourDesc = document.getElementById('tour-desc');
+const tourDots = document.querySelectorAll('.tour-dot');
+
+const TOUR_STEPS = [
+  {
+    targetSelector: '#mode-switcher-bar',
+    icon: '🚀',
+    title: '4 Architecture Modes',
+    desc: 'Switch between 4 modes: In-page rail (Mode 1), Docked companion window (Mode 2), Arc command modal (Mode 3), and Side panel (Mode 4). All modes are active during your 7-day free trial!'
+  },
+  {
+    targetSelector: '.columns-group',
+    icon: '🔲',
+    title: 'Bento Column Slider (2 to 6)',
+    desc: 'Use the slider or −/+ buttons to fit 2, 3, 4, 5, or 6 tab boxes per row. TabBox automatically reflows to fit any screen or sidebar width.'
+  },
+  {
+    targetSelector: '.preview-group',
+    icon: '🖼️',
+    title: 'Live Visual Previews & Sizes',
+    desc: 'See live screenshots of what’s inside your tabs! Toggle between visual snapshots and compact icon tiles, and pick S, M, or L card heights.'
+  },
+  {
+    targetSelector: '#sleep-inactive-btn',
+    icon: '⚡',
+    title: 'Tab Snoozer & Shortcut (Alt+B)',
+    desc: 'Click "Sleep Inactive" anytime to hibernate background tabs and free RAM. Press Alt+B anywhere to search, jump, and switch tabs without touching the mouse!'
+  }
+];
+
+let currentTourStep = 0;
+
+function setupTourEventListeners() {
+  if (tourHelpBtn) {
+    tourHelpBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      startOnboardingTour(true);
+    });
+  }
+
+  if (tourCloseBtn) {
+    tourCloseBtn.addEventListener('click', () => finishTour());
+  }
+
+  if (tourSkipBtn) {
+    tourSkipBtn.addEventListener('click', () => finishTour());
+  }
+
+  if (tourNextBtn) {
+    tourNextBtn.addEventListener('click', () => nextTourStep());
+  }
+
+  if (tourPrevBtn) {
+    tourPrevBtn.addEventListener('click', () => prevTourStep());
+  }
+
+  if (onboardingTourOverlay) {
+    onboardingTourOverlay.addEventListener('click', (e) => {
+      if (e.target === onboardingTourOverlay) finishTour();
+    });
+  }
+}
+
+function startOnboardingTour(isManual = false) {
+  if (!onboardingTourOverlay) return;
+  currentTourStep = 0;
+  onboardingTourOverlay.hidden = false;
+  renderTourStep();
+}
+
+function renderTourStep() {
+  // Remove previous highlights
+  document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
+
+  const step = TOUR_STEPS[currentTourStep];
+  if (!step) return;
+
+  const targetEl = document.querySelector(step.targetSelector);
+  if (targetEl) {
+    targetEl.classList.add('tour-highlight');
+    try {
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (e) {}
+  }
+
+  if (tourStepPill) tourStepPill.textContent = `Tip ${currentTourStep + 1} of ${TOUR_STEPS.length}`;
+  if (tourIcon) tourIcon.textContent = step.icon;
+  if (tourTitle) tourTitle.textContent = step.title;
+  if (tourDesc) tourDesc.textContent = step.desc;
+
+  if (tourDots) {
+    tourDots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === currentTourStep);
+    });
+  }
+
+  if (currentTourStep === 0) {
+    if (tourPrevBtn) tourPrevBtn.hidden = true;
+    if (tourSkipBtn) tourSkipBtn.hidden = false;
+    if (tourNextBtn) tourNextBtn.textContent = 'Next';
+  } else if (currentTourStep === TOUR_STEPS.length - 1) {
+    if (tourPrevBtn) tourPrevBtn.hidden = false;
+    if (tourSkipBtn) tourSkipBtn.hidden = true;
+    if (tourNextBtn) tourNextBtn.textContent = 'Get Started 🎉';
+  } else {
+    if (tourPrevBtn) tourPrevBtn.hidden = false;
+    if (tourSkipBtn) tourSkipBtn.hidden = false;
+    if (tourNextBtn) tourNextBtn.textContent = 'Next';
+  }
+}
+
+function nextTourStep() {
+  if (currentTourStep < TOUR_STEPS.length - 1) {
+    currentTourStep++;
+    renderTourStep();
+  } else {
+    finishTour();
+  }
+}
+
+function prevTourStep() {
+  if (currentTourStep > 0) {
+    currentTourStep--;
+    renderTourStep();
+  }
+}
+
+function finishTour() {
+  document.querySelectorAll('.tour-highlight').forEach(el => el.classList.remove('tour-highlight'));
+  if (onboardingTourOverlay) onboardingTourOverlay.hidden = true;
+  chrome.storage.local.set({ hasSeenOnboarding: true }).catch(() => {});
 }
 
 // Load cached thumbnails from session storage

@@ -67,6 +67,14 @@
         </svg>
       </button>
 
+      <button id="tour-help-btn" class="icon-btn" title="Feature Tour & Quick Tips">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </button>
+
       <button id="new-tab-btn" class="icon-btn primary-btn" title="New Tab (Ctrl+T)">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -253,7 +261,7 @@
         </div>
 
         <div class="paywall-footer-note">
-          <span id="paywall-footer-text">14-Day Money-Back Guarantee • Instant License Activation • Komunis Concept</span>
+          <span id="paywall-footer-text">💳 Paystack (NGN & USD), Cards, Apple Pay & Transfers Supported • 14-Day Guarantee • Komunis Concept</span>
         </div>
       </div>
     </div>
@@ -363,6 +371,34 @@
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
         <span>Close Tab</span>
+      </div>
+    </div>
+
+    <!-- New Install Interactive Onboarding Tooltip Tour -->
+    <div id="onboarding-tour-overlay" class="tour-overlay" hidden>
+      <div id="tour-spotlight-card" class="tour-spotlight-card">
+        <div class="tour-header">
+          <div class="tour-step-pill" id="tour-step-pill">Tip 1 of 4</div>
+          <button id="tour-close-btn" class="icon-btn tour-close-btn" title="Dismiss Tour">✕</button>
+        </div>
+        <div class="tour-body">
+          <div class="tour-icon" id="tour-icon">🚀</div>
+          <h4 id="tour-title">4 Architecture Modes</h4>
+          <p id="tour-desc">Switch between 4 modes: In-page rail (Mode 1), Docked companion window (Mode 2), Arc command modal (Mode 3), and Side panel (Mode 4). All modes are active during your 7-day free trial!</p>
+        </div>
+        <div class="tour-footer">
+          <div class="tour-dots" id="tour-dots">
+            <span class="tour-dot active"></span>
+            <span class="tour-dot"></span>
+            <span class="tour-dot"></span>
+            <span class="tour-dot"></span>
+          </div>
+          <div class="tour-actions">
+            <button id="tour-skip-btn" class="tour-btn secondary">Skip</button>
+            <button id="tour-prev-btn" class="tour-btn secondary" hidden>Back</button>
+            <button id="tour-next-btn" class="tour-btn primary">Next</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
