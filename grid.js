@@ -101,11 +101,15 @@ function createCard(tab) {
     img.src = shot;
     thumb.appendChild(img);
   } else {
-    const img = document.createElement('img');
-    img.className = 'fav';
-    img.src = favUrl;
-    img.onerror = () => { img.src = DEFAULT_FAVICON; };
-    thumb.appendChild(img);
+    const wireframe = document.createElement('div');
+    wireframe.className = 'bento-wireframe';
+    const line1 = document.createElement('div');
+    line1.className = 'wf-line wf-header';
+    const line2 = document.createElement('div');
+    line2.className = 'wf-line wf-body';
+    wireframe.appendChild(line1);
+    wireframe.appendChild(line2);
+    thumb.appendChild(wireframe);
   }
 
   const actions = document.createElement('div');
@@ -136,12 +140,8 @@ function createCard(tab) {
 
   const info = document.createElement('div');
   info.className = 'bento-info';
-  const fImg = document.createElement('img');
-  fImg.src = favUrl;
-  fImg.onerror = () => { fImg.src = DEFAULT_FAVICON; };
   const tSpan = document.createElement('span');
   tSpan.textContent = tab.title || 'New Tab';
-  info.appendChild(fImg);
   info.appendChild(tSpan);
   card.appendChild(info);
 
