@@ -322,7 +322,13 @@ function setupPaywallEventListeners() {
   // License Key Activation
   if (activateLicenseBtn && licenseKeyInput) {
     activateLicenseBtn.addEventListener('click', async () => {
-      const key = licenseKeyInput.value.trim();
+      const rawKey = licenseKeyInput.value || '';
+      const key = rawKey
+        .toUpperCase()
+        .replace(/[^A-Z0-9\-]/g, '')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+
       if (!key) {
         activationFeedback.hidden = false;
         activationFeedback.className = 'activation-feedback error';
@@ -1046,7 +1052,7 @@ function createTabBoxElement(tab, duplicateTabIds) {
     box.appendChild(dupBadge);
   }
 
-  // 1. MINI VISUAL PREVIEW AREA
+  // 1. PAGE VISUAL AREA (Clean screenshot / wireframe preview)
   const previewArea = document.createElement('div');
   previewArea.className = 'tab-visual-preview';
 
@@ -1067,36 +1073,21 @@ function createTabBoxElement(tab, duplicateTabIds) {
     mockup.appendChild(mockupBar);
 
     const mockupBody = document.createElement('div');
-    mockupBody.className = 'preview-mockup-body';
-    const mockupIcon = document.createElement('img');
-    mockupIcon.className = 'preview-mockup-icon';
-    mockupIcon.src = faviconUrl;
-    mockupIcon.onerror = () => { mockupIcon.src = DEFAULT_FAVICON_SVG; };
-    mockupBody.appendChild(mockupIcon);
+    mockupBody.className = 'preview-mockup-body wireframe';
+    const line1 = document.createElement('div');
+    line1.className = 'mockup-wireframe-line line-header';
+    const line2 = document.createElement('div');
+    line2.className = 'mockup-wireframe-line line-body';
+    mockupBody.appendChild(line1);
+    mockupBody.appendChild(line2);
     mockup.appendChild(mockupBody);
 
     previewArea.appendChild(mockup);
   }
 
-  // Favicon badge on preview
-  const faviconBadge = document.createElement('div');
-  faviconBadge.className = 'tab-favicon-badge';
-  const badgeImg = document.createElement('img');
-  badgeImg.src = faviconUrl;
-  badgeImg.onerror = () => { badgeImg.src = DEFAULT_FAVICON_SVG; };
-  faviconBadge.appendChild(badgeImg);
-  previewArea.appendChild(faviconBadge);
-
   box.appendChild(previewArea);
 
-  // 2. STANDALONE FAVICON (Compact Tile Mode)
-  const standaloneFavicon = document.createElement('img');
-  standaloneFavicon.className = 'tab-favicon-standalone';
-  standaloneFavicon.src = faviconUrl;
-  standaloneFavicon.onerror = () => { standaloneFavicon.src = DEFAULT_FAVICON_SVG; };
-  box.appendChild(standaloneFavicon);
-
-  // 3. TITLE & INFO
+  // 2. TAB TITLE
   const infoStrip = document.createElement('div');
   infoStrip.className = 'tab-info';
   const title = document.createElement('div');

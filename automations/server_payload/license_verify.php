@@ -72,7 +72,9 @@ function saveLicenses($file, $licenses) {
 }
 
 function verifyKeyChecksum($key, $salt) {
-    $parts = explode('-', strtoupper(trim($key)));
+    $clean = strtoupper(preg_replace('/[^A-Z0-9\-]/i', '', $key));
+    $clean = preg_replace('/\-+/', '-', $clean);
+    $parts = explode('-', trim($clean, '-'));
     if (count($parts) !== 4) return false;
     if ($parts[0] !== 'TBX') return false;
     $tier = $parts[1];
@@ -128,7 +130,9 @@ switch ($action) {
         header('Content-Type: application/json; charset=utf-8');
         $rawKey = $input['license_key'] ?? $_GET['license_key'] ?? '';
         $email = strtolower(trim($input['email'] ?? $_GET['email'] ?? ''));
-        $licenseKey = strtoupper(trim($rawKey));
+        $clean = strtoupper(preg_replace('/[^A-Z0-9\-]/i', '', $rawKey));
+        $clean = preg_replace('/\-+/', '-', $clean);
+        $licenseKey = trim($clean, '-');
 
         if (empty($licenseKey)) {
             http_response_code(400);

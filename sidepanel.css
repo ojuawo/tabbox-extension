@@ -654,51 +654,47 @@ html, body {
 .preview-mockup-body {
   flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  padding: 6px;
+  padding: 8px 10px;
+  gap: 5px;
 }
 
-.preview-mockup-icon {
-  width: 26px;
-  height: 26px;
-  opacity: 0.85;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+.mockup-wireframe-line {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
 }
 
-.visual-mode .tab-favicon-badge {
-  position: absolute;
-  bottom: 4px;
-  left: 4px;
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
-  background: var(--bg-primary);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;
-  z-index: 1;
+.mockup-wireframe-line.line-header {
+  width: 55%;
+  height: 6px;
+  background: rgba(99, 102, 241, 0.25);
 }
 
-.visual-mode .tab-favicon-badge img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+.mockup-wireframe-line.line-body {
+  width: 85%;
+  height: 4px;
+}
+
+.preview-mockup-icon,
+.tab-favicon-standalone,
+.tab-favicon-badge {
+  display: none !important;
 }
 
 .visual-mode .tab-info {
-  padding: 4px 6px;
+  padding: 6px 8px;
   background: var(--bg-box);
   display: flex;
   align-items: center;
+  min-height: 24px;
 }
 
 .visual-mode .tab-title {
   width: 100%;
-  font-size: 10px;
-  line-height: 1.2;
+  font-size: 10.5px;
+  font-weight: 500;
+  line-height: 1.25;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

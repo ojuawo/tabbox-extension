@@ -90,7 +90,11 @@ async function getProStatus() {
 }
 
 async function verifyAndActivateLicense(licenseKey, email) {
-  const cleanKey = (licenseKey || '').trim().toUpperCase();
+  const cleanKey = (licenseKey || '')
+    .toUpperCase()
+    .replace(/[^A-Z0-9\-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
   if (!cleanKey) {
     return { success: false, message: 'Please enter a valid license key.' };
   }
