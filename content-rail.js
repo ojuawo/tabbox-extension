@@ -649,25 +649,42 @@
           object-fit: cover;
           object-position: top;
         }
-        .tb-modal-thumb img.fav {
-          width: 28px;
-          height: 28px;
-          object-fit: contain;
+        .tb-modal-wireframe {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 10px 14px;
+          gap: 6px;
+          background: linear-gradient(135deg, #181a20 0%, #1e2028 100%);
+        }
+        .tb-modal-wireframe .wf-line {
+          background: rgba(255, 255, 255, 0.08);
+          border-radius: 3px;
+        }
+        .tb-modal-wireframe .wf-header {
+          width: 50%;
+          height: 6px;
+          background: rgba(99, 102, 241, 0.28);
+        }
+        .tb-modal-wireframe .wf-body {
+          width: 80%;
+          height: 4px;
         }
         .tb-modal-info {
-          padding: 7px 9px;
+          padding: 7px 10px;
           display: flex;
           align-items: center;
-          gap: 6px;
-        }
-        .tb-modal-info img {
-          width: 14px;
-          height: 14px;
-          flex-shrink: 0;
         }
         .tb-modal-info span {
           font-size: 11px;
           color: #f1f5f9;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 100%;
+        }
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -1488,11 +1505,15 @@
         img.src = shotUrl;
         thumb.appendChild(img);
       } else {
-        const img = document.createElement('img');
-        img.className = 'fav';
-        img.src = favUrl;
-        img.onerror = () => { img.src = DEFAULT_FAVICON; };
-        thumb.appendChild(img);
+        const wf = document.createElement('div');
+        wf.className = 'tb-modal-wireframe';
+        const line1 = document.createElement('div');
+        line1.className = 'wf-line wf-header';
+        const line2 = document.createElement('div');
+        line2.className = 'wf-line wf-body';
+        wf.appendChild(line1);
+        wf.appendChild(line2);
+        thumb.appendChild(wf);
       }
 
       const actions = document.createElement('div');
@@ -1524,12 +1545,8 @@
 
       const info = document.createElement('div');
       info.className = 'tb-modal-info';
-      const fIcon = document.createElement('img');
-      fIcon.src = favUrl;
-      fIcon.onerror = () => { fIcon.src = DEFAULT_FAVICON; };
       const tSpan = document.createElement('span');
       tSpan.textContent = tab.title || 'New Tab';
-      info.appendChild(fIcon);
       info.appendChild(tSpan);
       box.appendChild(info);
 
