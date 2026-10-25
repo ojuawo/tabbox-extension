@@ -1,5 +1,6 @@
 // TabBox In-Page Shadow DOM Rail (Architecture 1) & Command Palette Modal (Architecture 3)
 (() => {
+  if (window !== window.top) return;
   if (window.__TABBOX_CONTENT_INITIALIZED__) return;
   window.__TABBOX_CONTENT_INITIALIZED__ = true;
 

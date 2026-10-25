@@ -59,7 +59,9 @@
       "resources": [
         "icons/*",
         "grid.html",
+        "grid.js",
         "splitview.html",
+        "splitview.js",
         "sidepanel.html"
       ],
       "matches": ["<all_urls>"]
